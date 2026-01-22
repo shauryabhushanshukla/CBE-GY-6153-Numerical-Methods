@@ -121,22 +121,12 @@ y_1 = -(x-3).^2 +10
 y_2 = -(x-3).^2 +15
 y_3 = -(x-5).^2 +10
 
-% figure(1) % Open one window
-% plot(x, y_1, 'ms', 'LineWidth', 0.6)
-% hold on    % Now everything after this stays in Figure 1
-% plot(x, y_2, 'bv', 'LineWidth', 0.6)
-% plot(x, y_3, 'g+', 'LineWidth', 0.6)
-% 
-% xlabel('X'), ylabel('Y') 
-% legend('Y1', 'Y2', 'Y3')
-% grid on
-
-
-% xlim([0,2])    % Changing the limit of X from 0 to 2
-
-%% Sublpots 
-
-subplot(2,2,1)
-plot(x,y_1,'*')
-
-
+figure(1)
+plot(x,y_1,'*', 'LineWidth', 2)
+xlabel('X'),ylabel("Y)")
+hold on % for not overwriting the figure
+figure(2)
+plot(x,y_2,'r--','LineWidth', 2)
+hold on
+figure(3)
+plot(x,y_3,'g:','LineWidth', 3)
