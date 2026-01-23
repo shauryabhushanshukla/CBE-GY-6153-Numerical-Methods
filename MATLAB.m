@@ -136,7 +136,68 @@ y_3 = -(x-5).^2 +10
 
 %% Sublpots 
 
+
 subplot(2,2,1)
 plot(x,y_1,'*')
+xlabel('X')
+ylabel('Y')
+title('Y vs X ')
+legend('Original')
+
+%% SECTION 3: LOGIC 
+% A) Based upon the following equation: y = sin(x)
+%    What percent of y-values are greater than 0.8 for x = 0 to 10?
+
+clc, clearvars
+
+% parameters
+x = linspace(0,10,1000)
+y =sin(x)
+y_check = 0.8
+
+% actions
+plot(x,y,'*')
+
+hold on 
+plot([0,10],[0.8,0.8], 'r-')
+
+y_greater  = y > y_check
+
+Final_percent = sum(y_greater)/length(y)
+
+height(y), width(y)
 
 
+
+
+
+%%  LOGIC AND LOOPS
+% IF approach 
+
+
+% SECTION 4: Random Numbers and Logic
+% A) Generate 10 random values from 1 to 5. Count the number of 3's.
+% B) Display 'wow!' if more than 20% of the random numbers are 3.
+% C) Do parts A and B with a For Loop.
+% D) Extend to 10 million random numbers - which method is faster?
+
+
+
+clc, clearvars
+
+A = randi(5,1,10)
+A
+% e.g. A = [2 3 1 3 3 5 4 1 2 3]
+
+if sum(A == 3) >= 3
+    disp('wow!')
+end
+
+
+%% FOR LOOPS
+    
+clc, clearvars
+
+for i  = 1:10
+    i
+end    
