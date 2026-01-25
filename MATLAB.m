@@ -185,9 +185,9 @@ height(y), width(y)
 
 clc, clearvars
 
-A = randi(5,1,10)
+A = randi(5,1,10)  % generates a row vector containing 10 random integers, where each integer is between 1 and 5.
 A
-% e.g. A = [2 3 1 3 3 5 4 1 2 3]
+% e.g. A = [2 3 1 3 3 5 4 1 2 3] 
 
 if sum(A == 3) >= 3
     disp('wow!')
@@ -195,9 +195,60 @@ end
 
 
 %% FOR LOOPS
-    
+     
+
+
+
+
+
+
+
+%% While loops 
+
 clc, clearvars
 
-for i  = 1:10
-    i
+z =100;
+
+while z>75
+    disp(sqrt(z))
+    z= z -1
 end    
+disp('loop ended')
+
+
+
+
+%% custom function 
+
+%% Unified Example: Function + For + While
+clc, clearvars, close all
+
+% 1. WRITE THE FUNCTION (The "Formula")
+% This anonymous function calculates a pressure-adjusted temperature.
+adj_temp = @(t) t * 1.05; 
+
+% 2. THE FOR LOOP (The "Data Processor")
+% We use this to apply the function to a specific set of 10 measurements.
+raw_temps = [20, 30, 40, 50, 60, 70, 80, 90, 100, 110];
+processed_data = zeros(1, 10); % Pre-allocation for speed
+
+disp('--- Processing Batch Data with FOR Loop ---')
+for i = 1:length(raw_temps)
+    processed_data(i) = adj_temp(raw_temps(i));
+    fprintf('Input: %d -> Adjusted: %.1f\n', raw_temps(i), processed_data(i));
+end
+
+% 3. THE WHILE LOOP (The "Safety Monitor")
+% We use this to keep increasing a value UNTIL it hits a safety limit.
+disp('--- Monitoring Safety Limit with WHILE Loop ---')
+current_t = 50; 
+safety_limit = 120;
+seconds = 0;
+
+while adj_temp(current_t) < safety_limit
+    current_t = current_t + 10; % Increase temperature
+    seconds = seconds + 1;
+    fprintf('At %d seconds, Adjusted Temp is %.1f\n', seconds, adj_temp(current_t));
+end
+
+fprintf('Safety limit reached after %d iterations!\n', seconds);
