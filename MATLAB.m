@@ -191,3 +191,71 @@ function result = calc_power(base, power)
     end
     result = base ^ power;
 end
+
+
+%% Practice Questions
+
+% Energy Harvesting Simulation
+
+% Imagine a sensor that generates power based on a sine wave
+% (similar to a light sensor over a full day).
+%
+% The goal is to simulate the total energy collected over 24 hours.
+%
+% PARAMETERS:
+% Time (t): 24 hours total
+% Sampling interval: every 15 minutes (0.25 hours)
+%
+% Power Formula:
+% P(t) = sin((pi * t) / 12) + 1
+%
+% SAFETY RULE:
+% If the power P exceeds 1.8, the sensor enters "Overdrive" mode
+% and only 80% of that power is stored.
+%
+% OBJECTIVE:
+% Calculate the total energy collected by summing all power values
+% over the 24-hour period (after applying the safety rule).
+
+clc, clearvars, clear all
+% Parameter
+t =0:0.25:24;
+
+% Power Formula 
+P_raw = sin((pi * t)/ 12) + 1;
+
+% Calling saftey function 
+total_safe_power = apply_safety(P_raw);
+
+% objective 
+total_energy = sum(total_safe_power) * 0.25 %
+fprintf("Total Energy collected: %d", total_energy)
+
+% Plotting 
+plot(t,P_raw, 'r--','LineWidth',2.5);
+hold on;
+plot(t,total_safe_power, 'b','LineWidth',3)
+xlabel("Time")
+ylabel("Power (w)")
+title('Energy Harvesting with Safety Rule');
+legend('Raw Power', 'Safe Power')
+grid on;
+
+
+
+% Function: Apply Safety Rule
+function safe_power = apply_safety(raw_power)
+    safe_power = raw_power; % % Make a copy of the input
+    
+% Apply the safety rule: if power > 1.8, store only 80% of it
+    for i = 1:length(safe_power)
+        if safe_power(i) > 1.8
+            safe_power(i)  = safe_power(i) * 0.8;
+        end
+    end
+end
+
+
+
+
+
