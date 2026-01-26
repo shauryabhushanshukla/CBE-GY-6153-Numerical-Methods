@@ -1,254 +1,193 @@
-% Clear environment
-clc
-clearvars
-disp('Environment cleared and ready for new calculations.');
+%% Clear Environment
+% Reset the command window and workspace, close figures.
+clc                     % clear command window
+clearvars               % remove variables from workspace
+close all               % close all figure windows
+disp('Environment cleared and ready for new calculations.'); % status
 
-% Simple calculations (scalars)
-y = 5;
-x = 10;
+%% Simple Scalar Calculations
+% Basic arithmetic with scalars
+y = 5;                  % scalar y
+x = 10;                 % scalar x
 
-total = x + y;
-mul = x * y;         % scalar multiplication
-div = y / x;
+total = x + y;          % sum
+mul = x * y;            % multiplication
+divv = y / x;           % division (rename from 'div' to avoid function name)
 
-fprintf('Sum: %d\n', total);
-fprintf('Multiplication: %d\n', mul);
-fprintf('Division: %f\n', div);
+fprintf('Sum: %d\n', total);                     % show sum
+fprintf('Multiplication: %d\n', mul);            % show product
+fprintf('Division: %f\n', divv);                 % show quotient
 
-% Matrices, Arrays and Linear Algebra
-x_row = 1:10;        % 1 through 10 (row vector)
-whos
-x_col = x_row.';     % transpose -> column vector
+%% Vectors, Matrices and Linear Algebra
+% Create common vector and matrix types for examples
 
+x_row = 1:10;           % row vector: [1 2 ... 10]
+x_col = x_row.';        % column vector: transpose of x_row
 
-x_lin = linspace(1,10,100);  % 100 evenly spaced points between 1 and 10
+x_lin = linspace(1,10,100);  % 100 evenly spaced points from 1 to 10
 
-y_vec = [12 50 -8 -100 -200];
+y_vec = [12 50 -8 -100 -200];% example row vector with mixed signs
 
-A = [1,2; 3,4; 5,6; 7,8];     % 4x2 matrix
+A = [1,2; 3,4; 5,6; 7,8];    % 4x2 matrix
+A_plus2 = A + 2;             % add scalar 2 to every element
+A_times2 = A * 2;            % scale matrix by 2
 
-A_plus2 = A + 2;
-A_times2 = A * 2;
+At = A.';                    % transpose of A (2x4)
+AAt = A * At;                % A * A' -> 4x4 symmetric matrix
 
-At = A.';                     % transpose (2x4)
-AAt = A * At;                 % (4x2)*(2x4) -> 4x4
+w = linspace(0,100,10);      % 10 points between 0 and 100
+w_square = w .^ 2;           % element-wise square
 
-w = linspace(0,100,10);       % start, stop, number of points
-w_square = w .^ 2;            % element-wise square
+x2 = 22:100;                 % another 1D integer vector
+Matrices = [1,2,3; 4,5,6];   % 2x3 example matrix
 
-x2 = 22:100;                  % another 1D array
-Matrices = [1,2,3; 4,5,6];    % 2x3 matrix
+Aones = ones(3,1);           % 3x1 column of ones
+B10 = zeros(10,1);           % 10x1 column of zeros
+C = zeros(2,8);              % 2x8 zero matrix
+D = eye(3);                  % 3x3 identity matrix
 
-Aones = ones(3,1);            % 3x1 column of ones
-B10 = zeros(10,1);            % 10x1 zeros (use zeros(10) for 10x10)
-C = zeros(2,8);               % 2x8 zeros matrix
-D = eye(3);                   % 3x3 identity
+x = 1:2:10;                  % vector from 1 to 10 with step 2 -> [1 3 5 7 9]
 
-x =1:2:10                     % start, jump, stop
+%% Indexing Examples
+% Demonstrate how to extract and modify elements and subarrays
 
-% Index 
-clc, clearvars
+A = [5,3,4.2; 8,9,0];        % 2x3 matrix example
+val_22 = A(2,2);             % element at row 2, column 2 -> 9
+sum_2row = A(2,2) + A(2,1);  % add elements in row 2: 9 + 8
 
-A = [5,3,4.2; 8 9 0]
+A = [1 2 3 4 5 6 7 8];       % 1x8 row vector
+first = A(1);                % first element -> 1
+second = A(2);               % second element -> 2
+last = A(end);               % last element -> 8
 
-A (2,2)    % for calling 9 means 2 row X 2 column
+A = [1 2 3; 4 5 6];          % 2x3 matrix
+A(1,1) = 100;                % modify element (row1,col1) -> now 100
+second_row = A(2,:);         % all columns of row 2 -> [4 5 6]
+subset_2 = A(2,1:3);         % columns 1 to 3 of row 2 -> same as above
+subset_2_to_end = A(2,1:end);% same as previous (useful with unknown size)
 
-A(2,2) + A(2,1) % Adding 9 + 8
+%% QUESTION 1: Function Analysis (0 < x < 5)
+% Analyze y = -(x - 3).^2 + 10 on the interval (0,5)
 
-% If we are having matrix 
+X = linspace(0,5,100);           % dense sampling of x in [0,5]
+Y = -(X - 3).^2 + 10;            % element-wise square with vector X
 
-A = [1 2 3 4 5 6 7 8];
+[Max_value, I] = max(Y);         % Max value and index in Y
+X_max_value = X(I);              % x at which max occurs
 
-A(1)
-A(2)
+Min_value = min(Y);              % minimum y on sampled grid
+Imin = find(Y == Min_value, 1);  % index of first minimum
+X_min_value = X(Imin);           % x at which min occurs
 
-A(end) % Last value in the Matrix
+% Anonymous function for exact evaluation at any x
+Yfun = @(x) -(x - 3).^2 + 10;    % use dot when x may be vectorized
 
+% Evaluate function at an arbitrary x
+y_at_20_2 = Yfun(20.2);          % demonstrates function outside sampled range
 
-A = [1 2 3; 4 5 6];
-A(1,1) = 100
-
-A(2,:)  % all the values of 2 row
-
-A(2, 1:3)  % the values of 2 row from 1 column to 3 column 
-
-A(2, 1:end)
-
-
-%% QUESTION 1: Function Analysis
-% A) What is the maximum value of the following equation on the range 0 < x < 5?
-%    Equation: y = -(x - 3)^2 + 10
-%
-% B) What is the minimum of the function?
-%
-% C) At what x-value does the maximum y-value occur?
-%
-% D) What is y(20.7)?
-
-clc, clearvars, close all  % close all clears all figures that we in upperscript
-
-
-%generate bunch of X values 0 and 5
-
-X = linspace(0,5)   % it will give 100 values
-
-Y = (-(X-3).^2)  + 10   % its and element wise opeation add a dot 
-
-%plot(X,Y, '*');
-
-help max
-
-[Max_value, I] = max(Y) % I will give the index of this 
-
-X_max_value = X(I)   % 60th avalue of X
-
-
-% Now we are going to define the custom fucntion, MAtlab calls these Anonymous Function 
-Y = @(x) (-(x-3)).^2 +10
-Y(20.2)
+fprintf('Max Y = %.4f at X = %.4f\n', Max_value, X_max_value);
+fprintf('Min Y = %.4f at X = %.4f\n', Min_value, X_min_value);
+fprintf('Y(20.2) = %.4f\n', y_at_20_2);
 
 %% SECTION 2: Curve Transformations and Plotting (-10 to 10)
+% Compare vertical and horizontal shifts of the parabola
 
-% A) Plot the equation y = -(x - 3)^2 + 10 from x = -10 to 10.
+x = -10:10;                      % integer x from -10 to 10
+y1 = -(x - 3).^2 + 10;           % original curve
+y2 = -(x - 3).^2 + 15;           % vertical shift up by +5
+y3 = -(x - 5).^2 + 10;           % horizontal shift right by +2
 
-% B) How does the curve change if 15 is added instead of 10?
+figure;                          % new figure window
+plot(x, y1, 'm-*', 'LineWidth', 0.8); hold on
+plot(x, y2, 'b--o', 'LineWidth', 0.8);
+plot(x, y3, 'g:+', 'LineWidth', 0.8);
+xlabel('X'); ylabel('Y');
+title('Curve Transformations: vertical and horizontal shifts');
+legend('y = -(x-3)^2 +10','y = +(15)','y = (x-5)','Location','best');
+grid on;
+hold off;
 
-% C) How does the curve change if (x-5) is in parenthesis?
-clc, clearvars
+%% SECTION 3: Logic with sin(x)
+% Find what percent of sin(x) values exceed 0.8 on x in [0,10]
 
-x = -10:10
-y_1 = -(x-3).^2 +10
-y_2 = -(x-3).^2 +15
-y_3 = -(x-5).^2 +10
+x = linspace(0,10,1000);         % high-resolution x
+y = sin(x);                      % sine values
+y_check = 0.8;                   % threshold
 
-% figure(1) % Open one window
-% plot(x, y_1, 'ms', 'LineWidth', 0.6)
-% hold on    % Now everything after this stays in Figure 1
-% plot(x, y_2, 'bv', 'LineWidth', 0.6)
-% plot(x, y_3, 'g+', 'LineWidth', 0.6)
-% 
-% xlabel('X'), ylabel('Y') 
-% legend('Y1', 'Y2', 'Y3')
-% grid on
+figure;
+plot(x,y,'-'); hold on
+plot([0,10],[y_check,y_check],'r-','LineWidth',1); % horizontal threshold line
+xlabel('x'); ylabel('sin(x)');
+title('sin(x) and threshold y = 0.8');
+grid on;
+hold off;
 
+y_greater = y > y_check;                         % logical array
+final_percent = 100 * sum(y_greater) / length(y); % percent of points > 0.8
 
-% xlim([0,2])    % Changing the limit of X from 0 to 2
+fprintf('Percent of y > %.2f is %.3f%%\n', y_check, final_percent);
 
-%% Sublpots 
+% Use size instead of non-existent height/width functions
+[rows, cols] = size(y);
+fprintf('y vector dimensions: %d x %d\n', rows, cols);
 
+%% SECTION 4: Random Numbers and Logic
+% A) Generate 10 random integers from 1 to 5, count number of 3s.
+% B) Display 'wow!' if at least 30% (i.e., 3 out of 10) are 3s.
 
-subplot(2,2,1)
-plot(x,y_1,'*')
-xlabel('X')
-ylabel('Y')
-title('Y vs X ')
-legend('Original')
+A = randi(5,1,10);            % 1x10 vector of integers 1..5
+fprintf('A = [%s]\n', sprintf('%d ', A));  % print the vector
 
-%% SECTION 3: LOGIC 
-% A) Based upon the following equation: y = sin(x)
-%    What percent of y-values are greater than 0.8 for x = 0 to 10?
-
-clc, clearvars
-
-% parameters
-x = linspace(0,10,1000)
-y =sin(x)
-y_check = 0.8
-
-% actions
-plot(x,y,'*')
-
-hold on 
-plot([0,10],[0.8,0.8], 'r-')
-
-y_greater  = y > y_check
-
-Final_percent = sum(y_greater)/length(y)
-
-height(y), width(y)
-
-
-
-
-
-%%  LOGIC AND LOOPS
-% IF approach 
-
-
-% SECTION 4: Random Numbers and Logic
-% A) Generate 10 random values from 1 to 5. Count the number of 3's.
-% B) Display 'wow!' if more than 20% of the random numbers are 3.
-% C) Do parts A and B with a For Loop.
-% D) Extend to 10 million random numbers - which method is faster?
-
-
-
-clc, clearvars
-
-A = randi(5,1,10)  % generates a row vector containing 10 random integers, where each integer is between 1 and 5.
-A
-% e.g. A = [2 3 1 3 3 5 4 1 2 3] 
-
-if sum(A == 3) >= 3
-    disp('wow!')
+count_threes = sum(A == 3);   % count how many elements equal 3
+if count_threes >= 3          % check for at least 3 occurrences
+    disp('wow!')              % display message
 end
 
+%% IF-ELSE Logic (User Input)
+% Prompt user for a temperature and respond with a message
 
-%% FOR LOOPS
-     
+temp = input('Enter a temperature (numeric):\n');
 
-
-
-
-
-
-
-%% While loops 
-
-clc, clearvars
-
-z =100;
-
-while z>75
-    disp(sqrt(z))
-    z= z -1
-end    
-disp('loop ended')
-
-
-
-
-%% custom function 
-
-%% Unified Example: Function + For + While
-clc, clearvars, close all
-
-% 1. WRITE THE FUNCTION (The "Formula")
-% This anonymous function calculates a pressure-adjusted temperature.
-adj_temp = @(t) t * 1.05; 
-
-% 2. THE FOR LOOP (The "Data Processor")
-% We use this to apply the function to a specific set of 10 measurements.
-raw_temps = [20, 30, 40, 50, 60, 70, 80, 90, 100, 110];
-processed_data = zeros(1, 10); % Pre-allocation for speed
-
-disp('--- Processing Batch Data with FOR Loop ---')
-for i = 1:length(raw_temps)
-    processed_data(i) = adj_temp(raw_temps(i));
-    fprintf('Input: %d -> Adjusted: %.1f\n', raw_temps(i), processed_data(i));
+if temp > 30
+    disp('It''s a hot day.');        % note doubled single quote for apostrophe
+elseif temp < 15
+    disp('It''s a cold day.');
+else
+    disp('It''s a pleasant day.');
 end
 
-% 3. THE WHILE LOOP (The "Safety Monitor")
-% We use this to keep increasing a value UNTIL it hits a safety limit.
-disp('--- Monitoring Safety Limit with WHILE Loop ---')
-current_t = 50; 
-safety_limit = 120;
-seconds = 0;
-
-while adj_temp(current_t) < safety_limit
-    current_t = current_t + 10; % Increase temperature
-    seconds = seconds + 1;
-    fprintf('At %d seconds, Adjusted Temp is %.1f\n', seconds, adj_temp(current_t));
+%% For Loop Example
+% Demonstrates a fixed-count loop with formatted output
+for k = 1:5
+    fprintf('This is the repetition number: %d\n', k);
 end
 
-fprintf('Safety limit reached after %d iterations!\n', seconds);
+%% While Loop Example
+% Countdown style loop using a condition
+energy = 10;                   % initial battery percent
+while energy > 0
+    fprintf('Still Working....Battery Percent is %d\n', energy);
+    energy = energy - 1;       % decrement battery each loop
+end
+disp('Out of energy');
+
+%% Custom Local Function
+% Local functions must appear at the end of a script file (supported in modern MATLAB)
+my_answer = calc_power(4,5);   % call helper function
+fprintf('4^5 = %d\n', my_answer);
+
+function result = calc_power(base, power)
+    % calc_power  Compute base^power with a warning for zero exponent
+    %
+    % Inputs:
+    %   base  - numeric scalar base
+    %   power - nonnegative integer exponent
+    %
+    % Output:
+    %   result - base raised to power
+    %
+    if power == 0
+        warning('Any number to the power 0 is 1.'); % small helpful message
+    end
+    result = base ^ power;
+end

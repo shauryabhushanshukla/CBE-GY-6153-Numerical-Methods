@@ -79,9 +79,9 @@ A(2, 1:end)
 % A) What is the maximum value of the following equation on the range 0 < x < 5?
 %    Equation: y = -(x - 3)^2 + 10
 %
-% B) What is the minimum of the function?
+% B) What is the minimum of the function? 
 %
-% C) At what x-value does the maximum y-value occur?
+% C) At what x-value does the maximum y-value occur? 
 %
 % D) What is y(20.7)?
 
@@ -172,6 +172,9 @@ height(y), width(y)
 
 
 %%  LOGIC AND LOOPS
+% IF approach 
+
+
 % SECTION 4: Random Numbers and Logic
 % A) Generate 10 random values from 1 to 5. Count the number of 3's.
 % B) Display 'wow!' if more than 20% of the random numbers are 3.
@@ -182,14 +185,63 @@ height(y), width(y)
 
 clc, clearvars
 
-A = randi(5,1,10)
+A = randi(5,1,10)  % generates a row vector containing 10 random integers, where each integer is between 1 and 5.
 A
-% e.g. A = [2 3 1 3 3 5 4 1 2 3]
+% e.g. A = [2 3 1 3 3 5 4 1 2 3] 
 
 if sum(A == 3) >= 3
     disp('wow!')
 end
 
 
-%% FOR LOOPS
-    
+%% IF-ELSE LOGIC
+
+
+
+clc, clearvars
+
+temp = input("Enter a temperature:\n")
+
+if temp > 30
+    disp("It's a hot day.")
+elseif temp < 15 
+    disp("It's a cold day")
+else
+    disp("It's a plesant day.")
+end    
+
+
+%% For LOOP Logic
+% for loop uses when we know exactly how many repetition you need.
+
+% Printing Hello Matlab 5 times
+clc, clearvars
+
+for k = 1:5
+    fprintf("This is the repetition number: %d\n", k);
+end
+
+%% WHILE LOOP 
+% A while loop is condition controlled. It keeps running until condition is fulfilled
+
+clc, clearvars
+energy = 10;
+
+while energy > 0
+    fprintf("Still Working....Battery Percent is %d\n", energy)
+    energy  = energy - 1;   % reducing energy each time 
+end
+disp("Out of energy")
+
+
+
+
+%% Custom Function 
+clc, clearvars
+
+% Calling the function 
+my_answer = calc_power(4,5)
+
+function result = calc_power(base, power)
+    result = base^ power
+end    
