@@ -255,7 +255,3 @@ function safe_power = apply_safety(raw_power)
     end
 end
 
-
-
-
-
