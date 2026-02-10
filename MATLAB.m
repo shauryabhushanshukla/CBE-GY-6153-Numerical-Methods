@@ -1,3 +1,5 @@
+%% Lecture -1 of CBE-GY-6153
+
 %% Clear Environment
 % Reset the command window and workspace, close figures.
 clc                     % clear command window
