@@ -1,3 +1,6 @@
+%% Lecture -2 (Homework-2) - Linear Algebra
+
+
 function laminar_flow()
 % Solves laminar flow between two parallel plates using finite differences
 
